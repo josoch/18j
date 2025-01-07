@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Payment Form View -->
+    <record id="view_contribution_payment_form" model="ir.ui.view">
+        <field name="name">contribution.payment.form</field>
+        <field name="model">contribution.payment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_create_stripe_session" string="Pay with Stripe" type="object"
+                            class="oe_highlight" attrs="{'invisible': ['|', ('payment_method', '!=', 'stripe'), ('state', '!=', 'draft')]}"/>
+                    <button name="action_create_paypal_order" string="Pay with PayPal" type="object"
+                            class="oe_highlight" attrs="{'invisible': ['|', ('payment_method', '!=', 'paypal'), ('state', '!=', 'draft')]}"/>
+                    <button name="action_confirm_manual_payment" string="Confirm Payment" type="object"
+                            class="oe_highlight" attrs="{'invisible': ['|', ('payment_method', '!=', 'manual'), ('state', '!=', 'draft')]}"/>
+                    <button name="action_cancel_payment" string="Cancel" type="object"
+                            attrs="{'invisible': [('state', 'in', ['done', 'cancelled'])]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="installment_id"/>
+                            <field name="goal_id"/>
+                            <field name="amount"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                        <group>
+                            <field name="payment_method"/>
+                            <field name="payment_date" readonly="1"/>
+                            <field name="transaction_id" readonly="1"/>
+                            <field name="payment_url" readonly="1" widget="url"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Payment Information" attrs="{'invisible': [('state', '=', 'draft')]}">
+                            <group>
+                                <group>
+                                    <field name="payment_token" readonly="1"/>
+                                    <field name="error_message" readonly="1" attrs="{'invisible': [('error_message', '=', False)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Payment Tree View -->
+    <record id="view_contribution_payment_tree" model="ir.ui.view">
+        <field name="name">contribution.payment.tree</field>
+        <field name="model">contribution.payment</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'" decoration-warning="state == 'pending'" decoration-success="state == 'done'" decoration-danger="state == 'failed'">
+                <field name="name"/>
+                <field name="installment_id"/>
+                <field name="goal_id"/>
+                <field name="amount"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="payment_method"/>
+                <field name="payment_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Payment Search View -->
+    <record id="view_contribution_payment_search" model="ir.ui.view">
+        <field name="name">contribution.payment.search</field>
+        <field name="model">contribution.payment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="installment_id"/>
+                <field name="goal_id"/>
+                <field name="transaction_id"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                <filter string="Completed" name="done" domain="[('state', '=', 'done')]"/>
+                <filter string="Failed" name="failed" domain="[('state', '=', 'failed')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Payment Method" name="group_by_method" context="{'group_by': 'payment_method'}"/>
+                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                    <filter string="Goal" name="group_by_goal" context="{'group_by': 'goal_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Payment Action -->
+    <record id="action_contribution_payment" model="ir.actions.act_window">
+        <field name="name">Payments</field>
+        <field name="res_model">contribution.payment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_draft': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first payment!
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_contribution_payment"
+        name="Payments"
+        parent="menu_contribution_root"
+        action="action_contribution_payment"
+        sequence="30"/>
+</odoo>

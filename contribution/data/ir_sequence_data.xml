@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence for Goals -->
+        <record id="seq_contribution_goal" model="ir.sequence">
+            <field name="name">Contribution Goal</field>
+            <field name="code">contribution.goal</field>
+            <field name="prefix">GOAL/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequence for Installments -->
+        <record id="seq_contribution_installment" model="ir.sequence">
+            <field name="name">Contribution Installment</field>
+            <field name="code">contribution.installment</field>
+            <field name="prefix">INST/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequence for Payments -->
+        <record id="seq_contribution_payment" model="ir.sequence">
+            <field name="name">Contribution Payment</field>
+            <field name="code">contribution.payment</field>
+            <field name="prefix">PAY/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

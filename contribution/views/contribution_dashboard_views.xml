@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Dashboard Action -->
+    <record id="action_contribution_dashboard_combined" model="ir.actions.client">
+        <field name="name">Contribution Dashboard</field>
+        <field name="tag">contribution_dashboard</field>
+        <field name="params" eval="{
+            'menu_id': ref('menu_contribution_dashboard'),
+        }"/>
+    </record>
+
+    <!-- Dashboard Assets -->
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/contribution/static/src/scss/contribution_dashboard.scss"/>
+            <script type="text/javascript" src="/contribution/static/src/js/contribution_dashboard.js"/>
+        </xpath>
+    </template>
+
+    <!-- Dashboard Template -->
+    <template id="contribution_dashboard_template">
+        <div class="o_contribution_dashboard">
+            <!-- Summary Cards -->
+            <div class="o_contribution_summary">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Active Goals</h5>
+                                <p class="card-text" t-esc="total_active_goals"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Contributions</h5>
+                                <p class="card-text" t-esc="total_contributions"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Goals Completed</h5>
+                                <p class="card-text" t-esc="goals_completed"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Success Rate</h5>
+                                <p class="card-text" t-esc="success_rate"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="o_contribution_charts mt-4">
+                <div class="row">
+                    <!-- Goal Progress Chart -->
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Goal Progress</h5>
+                                <div class="chart-container">
+                                    <canvas id="goalProgressChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Contribution Trends -->
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Contribution Trends</h5>
+                                <div class="chart-container">
+                                    <canvas id="contributionTrendChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="o_contribution_activity mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Activity</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Goal</th>
+                                        <th>Contributor</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="o_contribution_activity_list">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

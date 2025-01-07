@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Contribution User Group -->
+        <record id="group_contribution_user" model="res.groups">
+            <field name="name">Contribution User</field>
+            <field name="category_id" ref="base.module_category_finance"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- Contribution Manager Group -->
+        <record id="group_contribution_manager" model="res.groups">
+            <field name="name">Contribution Manager</field>
+            <field name="category_id" ref="base.module_category_finance"/>
+            <field name="implied_ids" eval="[(4, ref('group_contribution_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        </record>
+
+        <!-- Record Rules -->
+        <!-- Goals: Users can see their own and where they are members -->
+        <record id="rule_contribution_goal_users" model="ir.rule">
+            <field name="name">Contribution Goals: Own and Member</field>
+            <field name="model_id" ref="model_contribution_goal"/>
+            <field name="domain_force">['|', ('owner_id', '=', user.id), ('member_ids', 'in', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_contribution_user'))]"/>
+        </record>
+
+        <!-- Goals: Managers can see all -->
+        <record id="rule_contribution_goal_managers" model="ir.rule">
+            <field name="name">Contribution Goals: Manager Access</field>
+            <field name="model_id" ref="model_contribution_goal"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_contribution_manager'))]"/>
+        </record>
+
+        <!-- Installments: Users can see their own -->
+        <record id="rule_contribution_installment_users" model="ir.rule">
+            <field name="name">Contribution Installments: Own</field>
+            <field name="model_id" ref="model_contribution_installment"/>
+            <field name="domain_force">[('contributor_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_contribution_user'))]"/>
+        </record>
+
+        <!-- Installments: Managers can see all -->
+        <record id="rule_contribution_installment_managers" model="ir.rule">
+            <field name="name">Contribution Installments: Manager Access</field>
+            <field name="model_id" ref="model_contribution_installment"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_contribution_manager'))]"/>
+        </record>
+    </data>
+</odoo>

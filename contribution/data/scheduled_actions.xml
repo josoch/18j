@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Scheduled action for updating AI analysis -->
+        <record id="ir_cron_contribution_update_analysis" model="ir.cron">
+            <field name="name">Contribution: Update AI Analysis</field>
+            <field name="model_id" ref="model_contribution_goal"/>
+            <field name="state">code</field>
+            <field name="code">model._update_all_goals_analysis()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Payment Success Template -->
+    <template id="payment_success_template" name="Payment Success">
+        <t t-call="web.layout">
+            <div class="container mt-4">
+                <div class="alert alert-success text-center">
+                    <h2>Payment Successful!</h2>
+                    <p>Your contribution has been successfully processed.</p>
+                    <p>Reference: <t t-esc="payment.name"/></p>
+                    <p>Amount: <t t-esc="payment.amount" t-options='{"widget": "monetary", "display_currency": payment.currency_id}'/></p>
+                    <a href="/web" class="btn btn-primary mt-3">Return to Dashboard</a>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Payment Error Template -->
+    <template id="payment_error_template" name="Payment Error">
+        <t t-call="web.layout">
+            <div class="container mt-4">
+                <div class="alert alert-danger text-center">
+                    <h2>Payment Failed</h2>
+                    <p>We're sorry, but there was an error processing your payment.</p>
+                    <p>Please try again or contact support if the problem persists.</p>
+                    <a href="/web" class="btn btn-primary mt-3">Return to Dashboard</a>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

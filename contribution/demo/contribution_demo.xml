@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Demo Goals -->
+        <record id="demo_goal_1" model="contribution.goal">
+            <field name="name">Team Building Event</field>
+            <field name="goal_type">group</field>
+            <field name="target_amount">1000.00</field>
+            <field name="start_date" eval="(datetime.now()).strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(datetime.now() + relativedelta(months=3)).strftime('%Y-%m-%d')"/>
+            <field name="state">active</field>
+            <field name="description">Fund collection for annual team building event</field>
+        </record>
+
+        <record id="demo_goal_2" model="contribution.goal">
+            <field name="name">Office Equipment</field>
+            <field name="goal_type">individual</field>
+            <field name="target_amount">500.00</field>
+            <field name="start_date" eval="(datetime.now()).strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(datetime.now() + relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+            <field name="state">active</field>
+            <field name="description">New office equipment fund</field>
+        </record>
+
+        <!-- Demo Installments -->
+        <record id="demo_installment_1" model="contribution.installment">
+            <field name="goal_id" ref="demo_goal_1"/>
+            <field name="amount">200.00</field>
+            <field name="date" eval="(datetime.now()).strftime('%Y-%m-%d')"/>
+            <field name="payment_method">bank</field>
+            <field name="state">paid</field>
+        </record>
+
+        <record id="demo_installment_2" model="contribution.installment">
+            <field name="goal_id" ref="demo_goal_2"/>
+            <field name="amount">100.00</field>
+            <field name="date" eval="(datetime.now()).strftime('%Y-%m-%d')"/>
+            <field name="payment_method">manual</field>
+            <field name="state">paid</field>
+        </record>
+    </data>
+</odoo>

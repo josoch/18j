@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_contribution_root"
+        name="Contributions"
+        web_icon="contribution,static/description/icon.png"
+        sequence="50"/>
+
+    <!-- Dashboard Menu -->
+    <menuitem id="menu_contribution_dashboard"
+        name="Dashboard"
+        parent="menu_contribution_root"
+        action="action_contribution_dashboard"
+        sequence="1"/>
+
+    <!-- Goals Menu -->
+    <menuitem id="menu_contribution_goals"
+        name="Goals"
+        parent="menu_contribution_root"
+        sequence="10"/>
+
+    <menuitem id="menu_contribution_goals_all"
+        name="All Goals"
+        parent="menu_contribution_goals"
+        action="action_contribution_goal"
+        sequence="1"/>
+
+    <menuitem id="menu_contribution_goals_my"
+        name="My Goals"
+        parent="menu_contribution_goals"
+        action="action_my_contribution_goal"
+        sequence="2"/>
+
+    <!-- Installments Menu -->
+    <menuitem id="menu_contribution_installments"
+        name="Installments"
+        parent="menu_contribution_root"
+        sequence="20"/>
+
+    <menuitem id="menu_contribution_installments_all"
+        name="All Installments"
+        parent="menu_contribution_installments"
+        action="action_contribution_installment"
+        sequence="1"/>
+
+    <menuitem id="menu_contribution_installments_my"
+        name="My Installments"
+        parent="menu_contribution_installments"
+        action="action_my_contribution_installment"
+        sequence="2"/>
+
+    <!-- Analytics Menu -->
+    <menuitem id="menu_contribution_analytics"
+        name="Analytics"
+        parent="menu_contribution_root"
+        sequence="30"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_contribution_config"
+        name="Configuration"
+        parent="menu_contribution_root"
+        sequence="100"
+        groups="group_contribution_manager"/>
+</odoo>

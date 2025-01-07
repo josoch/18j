@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Dashboard View -->
+    <record id="view_contribution_dashboard_kanban" model="ir.ui.view">
+        <field name="name">contribution.dashboard.kanban</field>
+        <field name="model">contribution.goal</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard" create="0">
+                <field name="name"/>
+                <field name="target_amount"/>
+                <field name="total_contributed"/>
+                <field name="progress"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary"><field name="name"/></div>
+                                    </div>
+                                </div>
+                                <div class="container o_kanban_card_content">
+                                    <div class="row">
+                                        <div class="col-6 o_kanban_primary_left">
+                                            <div class="o_kanban_primary_left">
+                                                <div><strong>Target: </strong><field name="target_amount" widget="monetary"/></div>
+                                                <div><strong>Contributed: </strong><field name="total_contributed" widget="monetary"/></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 o_kanban_primary_right">
+                                            <div class="o_kanban_primary_right">
+                                                <field name="progress" widget="percentpie"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id="view_contribution_goal_graph" model="ir.ui.view">
+        <field name="name">contribution.goal.graph</field>
+        <field name="model">contribution.goal</field>
+        <field name="arch" type="xml">
+            <graph string="Contribution Analysis" type="bar" sample="1">
+                <field name="name"/>
+                <field name="total_contributed" type="measure"/>
+                <field name="target_amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_contribution_goal_pivot" model="ir.ui.view">
+        <field name="name">contribution.goal.pivot</field>
+        <field name="model">contribution.goal</field>
+        <field name="arch" type="xml">
+            <pivot string="Contribution Analysis" sample="1">
+                <field name="name" type="row"/>
+                <field name="total_contributed" type="measure"/>
+                <field name="target_amount" type="measure"/>
+                <field name="progress" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Dashboard Action -->
+    <record id="action_contribution_dashboard" model="ir.actions.act_window">
+        <field name="name">Contribution Dashboard</field>
+        <field name="res_model">contribution.goal</field>
+        <field name="view_mode">kanban,graph,pivot</field>
+        <field name="view_id" ref="view_contribution_dashboard_kanban"/>
+        <field name="context">{
+            'search_default_active_goals': 1,
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first contribution goal to see the dashboard!
+            </p>
+        </field>
+    </record>
+</odoo>
